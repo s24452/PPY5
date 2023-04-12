@@ -1,5 +1,5 @@
 filename = "students1.txt"
-slownik = {}
+
 lista = []
 with open(filename) as file_object:
     for line in file_object:
@@ -8,16 +8,20 @@ with open(filename) as file_object:
         imie = x[1]
         nazwisko = x[2]
         punkty = x[3]
-        ocena=x[4]
-        status=x[5]
-
+        slownik = {}
         slownik['mail '] = mail
         slownik['imie '] = imie
         slownik['nazwsisko '] = nazwisko
         slownik['punkty '] = punkty
-        slownik['ocena ']=ocena
-        slownik['status ']=status
         lista.append(slownik)
+        if len(line)==4:
+            ocena=x[4]
+            slownik['ocena ']=ocena
+        elif len(line)==5:
+            ocena=x[4]
+            slownik['ocena ']=ocena
+            status=x[5]
+            slownik['status ']=status
 
 print(lista)
 
@@ -29,7 +33,10 @@ filename="students1.txt"
 with open(filename) as file_object:
     for linie in file_object:
         linia=linie.split(",")
-        if str(linia[5])!="GRADED" or str(linie[5])!="MAILED":
+        if len(linie)==5:
+            if  str(linia[5])=="GRADED" or str(linie[5])=="MAILED":
+                     print("nic")
+        else:
             punkty=int(linia[3])
             if punkty<=50:
                 ocena=2
@@ -40,11 +47,14 @@ with open(filename) as file_object:
             elif punkty>=71 or punkty<=80:
                 ocena=4
             elif punkty>=81 or punkty<=90:
-                ocena=4.5
+                 ocena=4.5
             else:
                 ocena=5
-        print(ocena)
-        file_object.write(ocena)
+        slownik['ocena']=ocena
+        slownik['status ']=''
+
+print("Sprawdzenie")
+print(slownik)
 
 
 
@@ -60,3 +70,19 @@ if wybor == 'd':
         punkty=input("Podaj ilosc punktow ")
         ocena=input("Podaj ocene ")
         status=input("Podaj status")
+
+elif wybor=='u':
+    indeksUsu=input("podaj index osoby do usuniecia")
+    if slownik[indeksUsu]:
+        lista.pop(int(indeksUsu))
+        print()
+
+#zadanie 4
+#zadanie 5
+def zapisDoPliku():
+    zapis=""
+    for i in list:
+        zapis+=i["imie "]+i["nazwisko "]+i["punkty "]+i["ocena "]+i["status "]
+    with open(filename) as file_object:
+        file_object.write(zapis)
+        
